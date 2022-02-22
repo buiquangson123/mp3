@@ -159,7 +159,6 @@ const app = {
       path: "./music/mashup9.mp3",
       image: "./image/mashup9.webp",
     },
-   
   ],
   setConfig: function (key, value) {
     this.config[key] = value;
@@ -183,8 +182,8 @@ const app = {
             </div>
             </div>
             `;
-      });
-    
+    });
+
     $(".playlist").innerHTML = htmls.join("");
   },
   definePropertys: function () {
@@ -256,20 +255,20 @@ const app = {
       //audio.duration: thời gian cả bài hát
       //audio.currentTime: thời gian hiện tại
       remainingTimer.textContent = formatTime(audio.currentTime);
-      if(!audio.duration) {
-        durationTimer.textContent = `0:00`
+      if (!audio.duration) {
+        durationTimer.textContent = `0:00`;
       } else {
-        durationTimer.textContent = formatTime(audio.duration)
+        durationTimer.textContent = formatTime(audio.duration);
       }
 
       function formatTime(number) {
         let time;
         const minutes = Math.floor(number / 60);
         const seconds = Math.floor(number - minutes * 60);
-        if(seconds < 10) {
-          time = `${minutes}:0${seconds}`
+        if (seconds < 10) {
+          time = `${minutes}:0${seconds}`;
         } else {
-          time = `${minutes}:${seconds}`
+          time = `${minutes}:${seconds}`;
         }
         return time;
       }
@@ -278,16 +277,20 @@ const app = {
       if (audio.duration && checkOnmouse) {
         const progressPercent = (audio.currentTime / audio.duration) * 100;
         progress.value = progressPercent;
-        if(progressPercent > 50) {
-          document.documentElement.style.setProperty("--width-progress", `${progressPercent - 0.5}%`)
+        if (progressPercent > 50) {
+          document.documentElement.style.setProperty(
+            "--width-progress",
+            `${progressPercent - 0.5}%`
+          );
         } else {
-          document.documentElement.style.setProperty("--width-progress", `${progressPercent + 1}%`)
+          document.documentElement.style.setProperty(
+            "--width-progress",
+            `${progressPercent + 1}%`
+          );
         }
         app.setConfig("currentTime", audio.currentTime);
       }
     };
-
-    // setInterval(audio.ontimeupdate, 500)
 
     //Xử lí khi tua bài hát
 
@@ -338,11 +341,11 @@ const app = {
       audio.play();
       // window.scrollTo(0, songIndex.children[app.currentIndex].offsetTop)
       window.scrollTo({
-        top:  songIndex.children[app.currentIndex].offsetTop,
+        top: songIndex.children[app.currentIndex].offsetTop,
         behavior: "smooth",
-      })
+      });
     };
-    
+
     //khi prev bài hát xong
     prevBtn.onclick = function () {
       if (app.isRandom) {
@@ -354,13 +357,13 @@ const app = {
       app.render();
       // window.scrollTo(0, songIndex.children[app.currentIndex].offsetTop)
       window.scrollTo({
-        top:  songIndex.children[app.currentIndex].offsetTop,
+        top: songIndex.children[app.currentIndex].offsetTop,
         behavior: "smooth",
-      })
+      });
     };
-    
+
     //khi random bài hát
-    
+
     randomBtn.onclick = function () {
       //thêm class active(chuyển sang màu đỏ)
       //toggle: thêm class active khi điều kiện là đúng
