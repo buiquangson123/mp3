@@ -390,9 +390,9 @@ const app = {
     cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`;
     audio.src = this.currentSong.path;
 
-    console.log(">>>check time: ", audio.currentTime);
-    console.log(">>>check time all: ", audio.duration);
-    console.log(">>>check time all: ", audio);
+    if (!this.config.currentTime) {
+      audio.currentTime = 0;
+    }
 
     if (this.currentIndex == this.config.currentIndex) {
       audio.currentTime = this.config.currentTime || 0;
