@@ -273,7 +273,6 @@ const app = {
         return time;
       }
 
-      //console.log((audio.currentTime / audio.duration * 100));
       if (audio.duration && checkOnmouse) {
         const progressPercent = (audio.currentTime / audio.duration) * 100;
         progress.value = progressPercent;
@@ -309,8 +308,6 @@ const app = {
       //closest() :chạy ngược lên phía trên cây DOM để tìm những phần tử phù hợp,
       //           sẽ bắt đầu tìm kiếm từ phần tử hiện tại và đi ngược lên với kết quả trả về là phần tử đầu tiên phù hợp tìm được
 
-      //e.target: mục tiêu muốn click vào
-
       //:not(.active): không có class active
       const songNode = e.target.closest(".song:not(.active)");
       if (songNode || e.target.closest(".option")) {
@@ -321,11 +318,6 @@ const app = {
           app.render();
           audio.play();
           app.setConfig("currentIndex", app.currentIndex);
-        }
-
-        //Xử lí khi click option
-        if (e.target.closest(".option")) {
-          //Tìm kiếm từ phần tử hiện tại là chính nó
         }
       }
     };
@@ -339,7 +331,6 @@ const app = {
       }
       app.render();
       audio.play();
-      // window.scrollTo(0, songIndex.children[app.currentIndex].offsetTop)
       window.scrollTo({
         top: songIndex.children[app.currentIndex].offsetTop,
         behavior: "smooth",
@@ -372,8 +363,7 @@ const app = {
       randomBtn.classList.toggle("active", app.isRandom);
     };
 
-    //khi chỉ chạy bài hát hiện tại
-
+    //lặp bài hát
     audio.onended = function () {
       if (!app.isSave) {
         nextBtn.click();
@@ -400,8 +390,12 @@ const app = {
     cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`;
     audio.src = this.currentSong.path;
 
+    console.log(">>>check time: ", audio.currentTime);
+    console.log(">>>check time all: ", audio.duration);
+    console.log(">>>check time all: ", audio);
+
     if (this.currentIndex == this.config.currentIndex) {
-      audio.currentTime = this.config.currentTime;
+      audio.currentTime = this.config.currentTime || 0;
     } else {
       audio.currentTime = 0;
     }
