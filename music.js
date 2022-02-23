@@ -252,8 +252,6 @@ const app = {
     };
 
     audio.ontimeupdate = function () {
-      //audio.duration: thời gian cả bài hát
-      //audio.currentTime: thời gian hiện tại
       remainingTimer.textContent = formatTime(audio.currentTime);
       if (!audio.duration) {
         durationTimer.textContent = `0:00`;
@@ -274,7 +272,7 @@ const app = {
       }
 
       if (audio.duration && checkOnmouse) {
-        const progressPercent = (audio.currentTime / audio.duration) * 100;
+        let progressPercent = (audio.currentTime / audio.duration) * 100;
         progress.value = progressPercent;
         if (progressPercent > 50) {
           document.documentElement.style.setProperty(
@@ -295,7 +293,7 @@ const app = {
 
     //onchange: khi có sự thay đổi
     progress.onchange = function () {
-      const progressCurrent = (progress.value * audio.duration) / 100;
+      let progressCurrent = (progress.value * audio.duration) / 100;
       audio.currentTime = progressCurrent;
       checkOnmouse = true;
     };
@@ -385,14 +383,32 @@ const app = {
     this.currentIndex = this.config.currentIndex || this.currentIndex;
     this.currentTime = this.config.currentTime || this.currentTime;
   },
-  loadCurrentSong: function () {
+  loadCurrentSong: async function () {
     heading.textContent = this.currentSong.singer;
     cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`;
     audio.src = this.currentSong.path;
 
-    if (!this.config.currentTime) {
-      audio.currentTime = 0;
-    }
+    setTimeout(() => {
+      let duration = audio.duration;
+      console.log(">>>check time duration : ", duration);
+      function formatTime(number) {
+        let time;
+        const minutes = Math.floor(number / 60);
+        const seconds = Math.floor(number - minutes * 60);
+        if (seconds < 10) {
+          time = `${minutes}:0${seconds}`;
+        } else {
+          time = `${minutes}:${seconds}`;
+        }
+        return time;
+      }
+
+      if (!duration) {
+        durationTimer.textContent = `0:00`;
+      } else {
+        durationTimer.textContent = formatTime(duration);
+      }
+    }, 200);
 
     if (this.currentIndex == this.config.currentIndex) {
       audio.currentTime = this.config.currentTime || 0;
